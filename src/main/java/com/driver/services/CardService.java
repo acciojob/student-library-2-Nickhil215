@@ -15,12 +15,14 @@ public class CardService {
     CardRepository cardRepository3;
 
     public Card createAndReturn(Student student){
-        Card card = null;
+        Card card = new Card();
+        card=student.getCard();
         //link student with a new card
         return card;
     }
 
     public void deactivateCard(int student_id){
+
         cardRepository3.deactivateCard(student_id, CardStatus.DEACTIVATED.toString());
     }
 }
