@@ -19,14 +19,17 @@ public class BookService {
     AuthorRepository authorRepository;
 
     public void createBook(Book book){
-        if(book != null && book.getAuthor() != null) { //Checking if the book and its author are not null
-            Author author = book.getAuthor();
-            author.getBooksWritten().add(book);
-            book.setAuthor(author);
-            book.setAvailable(true);
-            authorRepository.save(author);
+        if(book != null) {
+            if(book.getAuthor() != null) {
+                Author author = book.getAuthor();
+                author.getBooksWritten().add(book);
+                book.setAuthor(author);
+                book.setAvailable(true);
+                authorRepository.save(author);
+            }
         }
     }
+
 
     public List<Book> getBooks(String genre, boolean available, String author){
         List<Book> books = null; //find the elements of the list by yourself
