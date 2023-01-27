@@ -1,6 +1,7 @@
 package com.driver.services;
 
 import com.driver.models.Card;
+import com.driver.models.CardStatus;
 import com.driver.models.Student;
 import com.driver.repositories.CardRepository;
 import com.driver.repositories.StudentRepository;
@@ -33,10 +34,20 @@ public class StudentService {
 
     }
 
+//    public void createStudent(Student student){
+//        Card card=cardService4.createAndReturn(student);
+//        card.setStudent(student);
+//        cardRepository.save(card);
+//    }
+
     public void createStudent(Student student){
-        Card card=cardService4.createAndReturn(student);
-        card.setStudent(student);
-        cardRepository.save(card);
+        if(student != null){
+            Card newCard =  cardService4.createAndReturn(student);
+            if(newCard != null){
+                student.setCard(newCard);
+                cardRepository.save(newCard);
+            }
+        }
     }
 
     public void updateStudent(Student student){
@@ -54,6 +65,11 @@ public class StudentService {
     public void deleteStudent(int id){
         //Delete student and deactivate corresponding card
         Student student=studentRepository4.findById(id).get();
-        studentRepository4.delete(student);
+        if(student!=null){
+            studentRepository4.delete(student);
+            student.getCard().setCardStatus(CardStatus.DEACTIVATED);
+        }
+
+
     }
 }
