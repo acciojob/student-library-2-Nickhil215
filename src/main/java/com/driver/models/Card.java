@@ -32,6 +32,9 @@ public class Card {
     @JsonIgnoreProperties("card")
     private List<Book> books;
 
+    public Card(CardStatus cardStatus) {
+        this.cardStatus = cardStatus;
+    }
     public Card(){
         this.cardStatus = CardStatus.ACTIVATED;
     }
@@ -83,4 +86,6 @@ public class Card {
     public void setBooks(List<Book> books) {
         this.books = books;
     }
+
+
 }

@@ -23,6 +23,14 @@ public class Book {
     @JsonIgnoreProperties("booksWritten")
     private Author author;
 
+    public Book(String name, Genre genre, Author author, Card card, boolean available) {
+        this.name = name;
+        this.genre = genre;
+        this.author = author;
+        this.card = card;
+        this.available = available;
+    }
+
     @ManyToOne
     @JoinColumn
     @JsonIgnoreProperties("books")
