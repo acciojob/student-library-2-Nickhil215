@@ -5,11 +5,11 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @Entity
+@Table
 public class Card {
 
     @Id
@@ -33,14 +33,9 @@ public class Card {
     @JsonIgnoreProperties("card")
     private List<Book> books;
 
-    public Card(CardStatus cardStatus) {
-        this.cardStatus = cardStatus;
-    }
     public Card(){
         this.cardStatus = CardStatus.ACTIVATED;
     }
-
-
 
     public int getId() {
         return id;
@@ -89,6 +84,4 @@ public class Card {
     public void setBooks(List<Book> books) {
         this.books = books;
     }
-
-
 }

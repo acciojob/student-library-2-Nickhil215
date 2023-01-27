@@ -8,6 +8,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
+@Table
 public class Student {
 
     @Id
@@ -20,9 +21,6 @@ public class Student {
     private int age; // in case we want to check on the basis of age while issuing
 
     private String country;
-
-    public Student() {
-    }
 
     // alter table student add foreign key constraint card references Card(id)
 
@@ -51,19 +49,14 @@ public class Student {
                 '}';
     }
 
-    public Student(String emailId, String name, int age, String country, Card card) {
-        this.emailId = emailId;
-        this.name = name;
-        this.age = age;
-        this.country = country;
-        this.card = card;
-    }
-
     public Student(String emailId, String name, int age, String country) {
         this.emailId = emailId;
         this.name = name;
         this.age = age;
         this.country = country;
+    }
+
+    public Student() {
     }
 
     public int getId() {

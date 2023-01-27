@@ -4,10 +4,10 @@ package com.driver.models;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Table
 public class Book {
 
     @Id
@@ -24,22 +24,6 @@ public class Book {
     @JsonIgnoreProperties("booksWritten")
     private Author author;
 
-    public Book(String name, Genre genre, Author author) {
-        this.name = name;
-        this.genre = genre;
-        this.author = author;
-       }
-
-    public Book(int id, String name, Genre genre, Author author, Card card, boolean available, List<Transaction> transactions) {
-        this.id = id;
-        this.name = name;
-        this.genre = genre;
-        this.author = author;
-        this.card = card;
-        this.available = available;
-        this.transactions = transactions;
-    }
-
     @ManyToOne
     @JoinColumn
     @JsonIgnoreProperties("books")
@@ -53,7 +37,11 @@ public class Book {
     @JsonIgnoreProperties("book")
     private List<Transaction> transactions;
 
-    public Book() {
+    public Book(String name, Genre genre, Author author) {
+        this.name = name;
+        this.genre = genre;
+        this.author = author;
+        this.available = true;
     }
 
     public int getId() {
@@ -111,5 +99,7 @@ public class Book {
     public void setTransactions(List<Transaction> transactions) {
         this.transactions = transactions;
     }
-}
 
+    public Book() {
+    }
+}
