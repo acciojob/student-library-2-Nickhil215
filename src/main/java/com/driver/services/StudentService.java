@@ -43,10 +43,6 @@ public class StudentService {
     public void createStudent(Student student){
         if(student != null){
             Card newCard =  cardService4.createAndReturn(student);
-            if(newCard != null){
-                student.setCard(newCard);
-                cardRepository.save(newCard);
-            }
         }
     }
 
@@ -66,9 +62,9 @@ public class StudentService {
         //Delete student and deactivate corresponding card
         Student student=studentRepository4.findById(id).get();
         if(student!=null){
+            cardService4.deactivateCard(id);
             studentRepository4.delete(student);
-            student.getCard().setCardStatus(CardStatus.DEACTIVATED);
-        }
+            }
 
 
     }
