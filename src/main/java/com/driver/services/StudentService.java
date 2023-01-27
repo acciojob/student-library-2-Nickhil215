@@ -40,15 +40,15 @@ public class StudentService {
     }
 
     public void updateStudent(Student student){
-        Student updateStudent=studentRepository4.findById(student.getId()).get();
-        updateStudent.setUpdatedOn(student.getUpdatedOn());
-        updateStudent.setCard(student.getCard());
-        updateStudent.setAge(student.getAge());
-        updateStudent.setEmailId(student.getEmailId());
-        updateStudent.setCountry(student.getCountry());
-        updateStudent.setName(student.getName());
+//        Student updateStudent=studentRepository4.findById(student.getId()).get();
+//        updateStudent.setUpdatedOn(student.getUpdatedOn());
+//        updateStudent.setCard(student.getCard());
+//        updateStudent.setAge(student.getAge());
+//        updateStudent.setEmailId(student.getEmailId());
+//        updateStudent.setCountry(student.getCountry());
+//        updateStudent.setName(student.getName());
 
-        studentRepository4.save(updateStudent);
+        studentRepository4.updateStudentDetails(student);
     }
 
     public void deleteStudent(int id){

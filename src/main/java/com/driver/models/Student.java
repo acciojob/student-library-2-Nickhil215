@@ -59,7 +59,7 @@ public class Student {
         this.card = card;
     }
 
-    public Student(int id, String emailId, String name, int age, String country, Card card, Date createdOn, Date updatedOn) {
+    public Student(String emailId, String name, int age, String country) {
         this.id = id;
         this.emailId = emailId;
         this.name = name;
