@@ -22,8 +22,9 @@ public class BookService {
         if(book != null && book.getAuthor() != null) { //Checking if the book and its author are not null
             Author author = book.getAuthor();
             author.getBooksWritten().add(book);
+            book.setAuthor(author);
+            book.setAvailable(true);
             authorRepository.save(author);
-            bookRepository2.save(book);
         }
     }
 
