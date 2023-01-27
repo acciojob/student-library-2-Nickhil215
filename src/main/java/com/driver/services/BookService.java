@@ -7,6 +7,7 @@ import com.driver.repositories.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -17,19 +18,40 @@ public class BookService {
     BookRepository bookRepository2;
     @Autowired
     AuthorRepository authorRepository;
+    @Autowired
+    AuthorService authorService;
 
     public void createBook(Book book){
-        if(book != null) {
-            if(book.getAuthor() != null) {
-                Author author = book.getAuthor();
-                author.getBooksWritten().add(book);
+//        if(book != null) {
+//            if(book.getAuthor() != null) {
+//                Author author = book.getAuthor();
+//                author.getBooksWritten().add(book);
+//                book.setAuthor(author);
+//                book.setAvailable(true);
+//                authorRepository.save(author);
+//                bookRepository2.save(book);
+//            }
+//        }
+
+            try {
+                int id = book.getAuthor().getId();
+                Author author = authorRepository.findById(id).get();
+                List<Book> bookList = author.getBooksWritten();
+                if(bookList==null) {
+                    bookList = new ArrayList<>();
+                }
+                bookList.add(book);
                 book.setAuthor(author);
-                book.setAvailable(true);
+                author.setBooksWritten(bookList);
                 authorRepository.save(author);
+
+            }
+            catch (Exception e) {
+
                 bookRepository2.save(book);
             }
         }
-    }
+
 
 
     public List<Book> getBooks(String genre, boolean available, String author){
