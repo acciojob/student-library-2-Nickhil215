@@ -31,7 +31,7 @@ public class Card {
 
     @OneToMany(mappedBy = "card", cascade = CascadeType.ALL)
     @JsonIgnoreProperties("card")
-    private List<Book> books=new ArrayList<>();
+    private List<Book> books;
 
     public Card(CardStatus cardStatus) {
         this.cardStatus = cardStatus;
