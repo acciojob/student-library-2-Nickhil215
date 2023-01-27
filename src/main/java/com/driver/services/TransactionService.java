@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 @Service
@@ -87,37 +88,61 @@ public class TransactionService {
 
         Transaction transaction = transactions.get(transactions.size() - 1);
 
-        Date issueDate = transaction.getTransactionDate();
+//        Date issueDate = transaction.getTransactionDate();
+//
+//        long timeIssuetime = Math.abs(System.currentTimeMillis() - issueDate.getTime());
+//
+//        long no_of_days_passed = TimeUnit.DAYS.convert(timeIssuetime, TimeUnit.MILLISECONDS);
+//
+//        int fine = 0;
+//        if(no_of_days_passed > getMax_allowed_days){
+//            fine = (int)((no_of_days_passed - getMax_allowed_days) * fine_per_day);
+//        }
+//
+//        Book book = transaction.getBook();
+//
+//        book.setAvailable(true);
+//        book.setCard(null);
+//
+//
+//
+//        //Remve that book from that card list
+//
+//        bookRepository5.updateBook(book);
+//
+//        Transaction tr = new Transaction();
+//        tr.setBook(transaction.getBook());
+//        tr.setCard(transaction.getCard());
+//        tr.setIssueOperation(false);
+//        tr.setFineAmount(fine);
+//        tr.setTransactionStatus(TransactionStatus.SUCCESSFUL);
+//
+//        transactionRepository5.save(tr);
+//
+//        return tr;
 
-        long timeIssuetime = Math.abs(System.currentTimeMillis() - issueDate.getTime());
-
-        long no_of_days_passed = TimeUnit.DAYS.convert(timeIssuetime, TimeUnit.MILLISECONDS);
-
-        int fine = 0;
-        if(no_of_days_passed > getMax_allowed_days){
-            fine = (int)((no_of_days_passed - getMax_allowed_days) * fine_per_day);
-        }
-
-        Book book = transaction.getBook();
-
+        Book book=transaction.getBook();
         book.setAvailable(true);
+        int fine=0;
+        Date currentDate=new Date();
+        long time=currentDate.getTime()-transaction.getTransactionDate().getTime();
+        long days=TimeUnit.MILLISECONDS.toDays(time);
+
+        if(days>getMax_allowed_days){
+            fine=(int)days*fine_per_day;
+        }
         book.setCard(null);
+        bookRepository5.save(book);
+        Transaction update=new Transaction();
+        update.setBook(book);
+        update.setCard(transaction.getCard());
+        update.setFineAmount(fine);
+        update.setIssueOperation(false);
+        update.setTransactionStatus(TransactionStatus.SUCCESSFUL);
+        update.setTransactionId(UUID.randomUUID().toString());
 
+        transactionRepository5.save(update);
 
-
-        //Remve that book from that card list
-
-        bookRepository5.updateBook(book);
-
-        Transaction tr = new Transaction();
-        tr.setBook(transaction.getBook());
-        tr.setCard(transaction.getCard());
-        tr.setIssueOperation(false);
-        tr.setFineAmount(fine);
-        tr.setTransactionStatus(TransactionStatus.SUCCESSFUL);
-
-        transactionRepository5.save(tr);
-
-        return tr;
+        return update;
     }
 }
