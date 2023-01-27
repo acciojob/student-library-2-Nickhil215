@@ -2,13 +2,11 @@ package com.driver.models;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import org.springframework.boot.test.autoconfigure.data.cassandra.DataCassandraTest;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
-
 public class Book {
 
     @Id
@@ -95,12 +93,6 @@ public class Book {
 
     public void setTransactions(List<Transaction> transactions) {
         this.transactions = transactions;
-    }
-
-    public Book(String name, Genre genre, boolean available) {
-        this.name = name;
-        this.genre = genre;
-        this.available=available;
     }
 }
 

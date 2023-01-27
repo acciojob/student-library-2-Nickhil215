@@ -21,12 +21,34 @@ public class Student {
 
     private String country;
 
-    public Student(String emailId, String name, int age, String country, Card card) {
-        this.emailId = emailId;
-        this.name = name;
-        this.age = age;
-        this.country = country;
-        this.card = card;
+    public Student() {
+    }
+
+    // alter table student add foreign key constraint card references Card(id)
+
+    @OneToOne
+    @JoinColumn   // join this column to the primary key of Card table
+    @JsonIgnoreProperties("student")
+    private Card card;
+
+
+    @CreationTimestamp
+    private Date createdOn;
+
+    @UpdateTimestamp
+    private Date updatedOn;
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "id=" + id +
+                ", email='" + emailId + '\'' +
+                ", name='" + name + '\'' +
+                ", age=" + age +
+                ", country='" + country + '\'' +
+                ", createdOn=" + createdOn +
+                ", updatedOn=" + updatedOn +
+                '}';
     }
 
     public int getId() {
@@ -92,36 +114,4 @@ public class Student {
     public void setUpdatedOn(Date updatedOn) {
         this.updatedOn = updatedOn;
     }
-
-    public Student() {
-    }
-
-    // alter table student add foreign key constraint card references Card(id)
-
-    @OneToOne
-    @JoinColumn   // join this column to the primary key of Card table
-    @JsonIgnoreProperties("student")
-    private Card card;
-
-
-    @CreationTimestamp
-    private Date createdOn;
-
-    @UpdateTimestamp
-    private Date updatedOn;
-
-    @Override
-    public String toString() {
-        return "Student{" +
-                "id=" + id +
-                ", email='" + emailId + '\'' +
-                ", name='" + name + '\'' +
-                ", age=" + age +
-                ", country='" + country + '\'' +
-                ", createdOn=" + createdOn +
-                ", updatedOn=" + updatedOn +
-                '}';
-    }
-
-
 }
