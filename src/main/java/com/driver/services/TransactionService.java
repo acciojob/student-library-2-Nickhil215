@@ -124,12 +124,12 @@ public class TransactionService {
         Book book=transaction.getBook();
         book.setAvailable(true);
         int fine=0;
-        Date currentDate=new Date();
-        long time=currentDate.getTime()-transaction.getTransactionDate().getTime();
+        long time=Math.abs(System.currentTimeMillis() - transaction.getTransactionDate().getTime());
         long days=TimeUnit.MILLISECONDS.toDays(time);
 
         if(days>getMax_allowed_days){
-            fine=(int)days*fine_per_day;
+
+            fine=(int)((days-getMax_allowed_days)*fine_per_day);
         }
         book.setCard(null);
         bookRepository5.save(book);
@@ -139,7 +139,6 @@ public class TransactionService {
         update.setFineAmount(fine);
         update.setIssueOperation(false);
         update.setTransactionStatus(TransactionStatus.SUCCESSFUL);
-        update.setTransactionId(UUID.randomUUID().toString());
 
         transactionRepository5.save(update);
 
